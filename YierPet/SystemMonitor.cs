@@ -79,7 +79,7 @@ public sealed class SystemMonitor
     }
 
     /// <summary>null on desktops without a battery.</summary>
-    public BatteryState? BatteryState()
+    public BatteryState? QueryBatteryState()
     {
         try
         {

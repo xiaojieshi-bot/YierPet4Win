@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace YierPet;
 
 public enum ReminderKind
@@ -398,7 +400,7 @@ public sealed class ReminderCenter
             (DateTime.UtcNow - _lastMemFire).TotalSeconds >= MemRepeat)
             candidates.Add(ReminderKind.MemoryPressure);
 
-        var battery = _systemMonitor.BatteryState();
+        var battery = _systemMonitor.QueryBatteryState();
         if (battery != null)
         {
             if (battery.OnACPower)

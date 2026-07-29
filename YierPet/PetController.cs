@@ -3,10 +3,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
-using Forms = System.Windows.Forms;
 
 namespace YierPet;
 
@@ -84,7 +82,7 @@ public sealed class PetController : IReminderCenterDelegate
         root.Children.Add(_spriteImage);
         root.Children.Add(_heatRect);
 
-        var area = Forms.Screen.PrimaryScreen!.WorkingArea;
+        var area = SystemParameters.WorkArea;
         _window = new Window
         {
             Width = PetWidth,
@@ -586,13 +584,41 @@ public sealed class PetController : IReminderCenterDelegate
         _isThrowing = false;
     }
 
-    private Forms.Rectangle WorkingArea()
+    private System.Drawing.Rectangle WorkingArea()
     {
+        var transform = PresentationSource.FromVisual(_window)?.CompositionTarget
+            ?.TransformFromDevice;
+        if (transform == null)
+            return RectToDrawingRectangle(SystemParameters.WorkArea);
+
+        System.Drawing.Rectangle physical;
         var helper = new WindowInteropHelper(_window);
         if (helper.Handle != IntPtr.Zero)
-            return Forms.Screen.FromHandle(helper.Handle).WorkingArea;
-        return Forms.Screen.PrimaryScreen!.WorkingArea;
+        {
+            physical = System.Windows.Forms.Screen.FromHandle(helper.Handle)
+                .WorkingArea;
+        }
+        else
+        {
+            physical = System.Windows.Forms.Screen.PrimaryScreen!.WorkingArea;
+        }
+
+        var topLeft = transform.Value.Transform(new Point(physical.Left, physical.Top));
+        var bottomRight = transform.Value.Transform(
+            new Point(physical.Right, physical.Bottom));
+        return System.Drawing.Rectangle.FromLTRB(
+            (int)Math.Floor(topLeft.X),
+            (int)Math.Floor(topLeft.Y),
+            (int)Math.Ceiling(bottomRight.X),
+            (int)Math.Ceiling(bottomRight.Y));
     }
+
+    private static System.Drawing.Rectangle RectToDrawingRectangle(Rect r) =>
+        System.Drawing.Rectangle.FromLTRB(
+            (int)Math.Floor(r.Left),
+            (int)Math.Floor(r.Top),
+            (int)Math.Ceiling(r.Right),
+            (int)Math.Ceiling(r.Bottom));
 
     private void ScheduleRandomBehavior()
     {

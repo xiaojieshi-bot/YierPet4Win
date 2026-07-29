@@ -1,7 +1,9 @@
 using System.IO;
 using System.Text.Json;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 
 namespace YierPet;
@@ -276,7 +278,7 @@ public static class UserSettings
 
     public static bool ReminderEnabled(ReminderKind kind)
     {
-        var key = kind.DefaultsKey;
+        var key = kind.DefaultsKey();
         var s = LoadStore();
         if (!s.ContainsKey(key)) return true;
         return s[key] == "1";
@@ -285,7 +287,7 @@ public static class UserSettings
     public static void SetReminderEnabled(ReminderKind kind, bool enabled)
     {
         var s = LoadStore();
-        s[kind.DefaultsKey] = enabled ? "1" : "0";
+        s[kind.DefaultsKey()] = enabled ? "1" : "0";
         SaveStore(s);
     }
 }
