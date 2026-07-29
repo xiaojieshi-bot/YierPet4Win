@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>YierPet Win 一二桌宠 · Windows 安装与使用教程</title>
+  <style>
+    :root {
+      --bg: #f0f4f8;
+      --paper: #fcfdff;
+      --ink: #1c1917;
+      --muted: #57534e;
+      --accent: #0078d4;
+      --accent-soft: #e8f4fd;
+      --border: #e7e5e4;
+      --code-bg: #292524;
+      --radius: 12px;
+      --font: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+      --mono: "Cascadia Code", "Consolas", "SF Mono", monospace;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.65;
+      font-size: 16px;
+    }
+    .wrap {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 2.5rem 1.25rem 4rem;
+    }
+    header {
+      background: linear-gradient(135deg, #fff 0%, var(--accent-soft) 100%);
+      border: 1px solid var(--border);
+      border-radius: calc(var(--radius) + 4px);
+      padding: 2rem 2rem 1.75rem;
+      margin-bottom: 2rem;
+    }
+    header h1 {
+      margin: 0 0 0.35rem;
+      font-size: 1.85rem;
+      letter-spacing: -0.02em;
+    }
+    header .tagline {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+    header .meta {
+      margin-top: 1.25rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+      font-size: 0.875rem;
+      color: var(--muted);
+    }
+    header a { color: var(--accent); }
+    nav.toc {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 2rem;
+    }
+    nav.toc h2 {
+      margin: 0 0 0.75rem;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+    nav.toc ol {
+      margin: 0;
+      padding-left: 1.25rem;
+    }
+    nav.toc li { margin: 0.35rem 0; }
+    nav.toc a { color: var(--ink); text-decoration: none; }
+    nav.toc a:hover { color: var(--accent); text-decoration: underline; }
+    section {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.25rem;
+    }
+    section h2 {
+      margin: 0 0 1rem;
+      font-size: 1.35rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--accent-soft);
+    }
+    section h3 {
+      margin: 1.5rem 0 0.65rem;
+      font-size: 1.05rem;
+    }
+    p { margin: 0.75rem 0; }
+    ul, ol { margin: 0.5rem 0; padding-left: 1.35rem; }
+    li { margin: 0.35rem 0; }
+    .note {
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+      padding: 0.85rem 1rem;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+    .warn {
+      background: #fef3c7;
+      border-left: 4px solid #d97706;
+      padding: 0.85rem 1rem;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+    section.quickstart {
+      border-color: var(--accent);
+      border-width: 2px;
+      background: linear-gradient(180deg, #fff 0%, var(--accent-soft) 120%);
+    }
+    section.quickstart h2 { border-bottom-color: rgba(0, 120, 212, 0.25); }
+    .quickstart-steps {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: qs;
+    }
+    .quickstart-steps > li {
+      counter-increment: qs;
+      margin: 1rem 0;
+      padding-left: 2.5rem;
+      position: relative;
+    }
+    .quickstart-steps > li::before {
+      content: counter(qs);
+      position: absolute;
+      left: 0;
+      top: 0.1rem;
+      width: 1.65rem;
+      height: 1.65rem;
+      line-height: 1.65rem;
+      text-align: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #fff;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+    .quickstart-steps .step-title {
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+    .quickstart-after {
+      margin-top: 1.25rem;
+      padding-top: 1rem;
+      border-top: 1px dashed var(--border);
+      font-size: 0.95rem;
+    }
+    .quickstart-after dl {
+      margin: 0.5rem 0 0;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.35rem 1rem;
+    }
+    .quickstart-after dt { font-weight: 600; color: var(--muted); }
+    .quickstart-after dd { margin: 0; }
+    pre {
+      background: var(--code-bg);
+      color: #fafaf9;
+      padding: 1rem 1.15rem;
+      border-radius: var(--radius);
+      overflow-x: auto;
+      font-family: var(--mono);
+      font-size: 0.875rem;
+      line-height: 1.5;
+      margin: 1rem 0;
+    }
+    code {
+      font-family: var(--mono);
+      font-size: 0.88em;
+      background: #f5f5f4;
+      padding: 0.12em 0.35em;
+      border-radius: 4px;
+    }
+    pre code { background: none; padding: 0; font-size: inherit; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+      margin: 1rem 0;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 0.55rem 0.65rem;
+      text-align: left;
+      vertical-align: top;
+    }
+    th { background: #fafaf9; font-weight: 600; }
+    kbd {
+      display: inline-block;
+      padding: 0.15em 0.45em;
+      font-family: var(--mono);
+      font-size: 0.8em;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      box-shadow: 0 1px 0 #d6d3d1;
+    }
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.875rem;
+      margin-top: 2rem;
+    }
+    @media print {
+      body { background: #fff; }
+      section, header, nav.toc { break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>YierPet Win 一二桌宠</h1>
+      <p class="tagline">Windows 桌面上的「一二」——安装、运行与日常使用说明</p>
+      <div class="meta">
+        <span>仓库：<a href="https://github.com/xiaojieshi-bot/YierPet4Win" target="_blank" rel="noopener">github.com/xiaojieshi-bot/YierPet4Win</a></span>
+        <span>平台：Windows 10 / 11</span>
+        <span>运行：.NET 8 桌面运行时</span>
+        <span>素材：仓库内 <code>Assets/</code> 自带，无需另下资源包</span>
+      </div>
+    </header>
+
+    <section id="quickstart" class="quickstart">
+      <h2>0. 太长不看 · 直接怎么做</h2>
+      <p style="margin-top:0">在 Windows 上打开 <strong>PowerShell</strong>（或终端），按顺序做下面四步即可。</p>
+      <ol class="quickstart-steps">
+        <li>
+          <div class="step-title">（首次）安装 .NET 8 SDK</div>
+          <p style="margin:0 0 0.5rem">用于编译项目。若已安装可跳过。</p>
+          <p style="margin:0">打开微软官网下载页，安装 <strong>.NET 8 SDK</strong>（不是仅 Runtime）：</p>
+          <p style="margin:0.35rem 0 0"><a href="https://dotnet.microsoft.com/download/dotnet/8.0" target="_blank" rel="noopener">dotnet.microsoft.com/download/dotnet/8.0</a></p>
+          <p style="margin:0.5rem 0 0">装完后新开一个终端，执行 <code>dotnet --version</code>，应显示 8.x。</p>
+        </li>
+        <li>
+          <div class="step-title">下载项目</div>
+          <p style="margin:0 0 0.5rem">整段复制粘贴到终端回车。</p>
+          <pre><code>git clone https://github.com/xiaojieshi-bot/YierPet4Win.git
+cd YierPet4Win</code></pre>
+          <p style="margin:0.5rem 0 0">没有 Git 也可以：下载 ZIP 解压，在资源管理器地址栏输入 <code>powershell</code> 回车，当前目录即项目根。</p>
+        </li>
+        <li>
+          <div class="step-title">构建</div>
+          <p style="margin:0 0 0.5rem">若提示「无法加载，因为在此系统上禁止运行脚本」，先执行一次（仅当前用户）：</p>
+          <pre><code>Set-ExecutionPolicy -Scope CurrentUser RemoteSigned</code></pre>
+          <p style="margin:0 0 0.5rem">然后构建：</p>
+          <pre><code>.\build.ps1</code></pre>
+          <p style="margin:0">成功后会生成 <code>build\YierPet.exe</code>。</p>
+        </li>
+        <li>
+          <div class="step-title">启动桌宠</div>
+          <pre><code>.\build\YierPet.exe</code></pre>
+          <p style="margin:0.5rem 0 0">桌面上会出现「一二」。<strong>任务栏通常不会出现常驻按钮，这是正常的。</strong></p>
+        </li>
+      </ol>
+      <div class="quickstart-after">
+        <strong>日常只需记：</strong>
+        <dl>
+          <dt>玩</dt><dd>拖动移动 · 单击打招呼 · 快速甩动可抛着玩</dd>
+          <dt>设置</dt><dd>在宠物身上<strong>右键</strong>（换形象、关提醒等）</dd>
+          <dt>退出</dt><dd>右键 → <strong>退出</strong></dd>
+        </dl>
+      </div>
+    </section>
+
+    <nav class="toc" aria-label="目录">
+      <h2>目录</h2>
+      <ol>
+        <li><a href="#quickstart">太长不看 · 四步上手</a></li>
+        <li><a href="#intro">这是什么</a></li>
+        <li><a href="#requirements">开始之前</a></li>
+        <li><a href="#install">安装与首次启动</a></li>
+        <li><a href="#runtime-only">只运行、不编译？</a></li>
+        <li><a href="#smartscreen">SmartScreen / 杀毒拦截</a></li>
+        <li><a href="#startup">开机自启</a></li>
+        <li><a href="#basics">基本操作</a></li>
+        <li><a href="#menu">右键菜单</a></li>
+        <li><a href="#reminders">提醒与哨兵</a></li>
+        <li><a href="#companion">陪伴模式</a></li>
+        <li><a href="#styles">四种形象</a></li>
+        <li><a href="#faq">常见问题</a></li>
+        <li><a href="#quit">如何退出</a></li>
+      </ol>
+    </nav>
+
+    <section id="intro">
+      <h2>1. 这是什么</h2>
+      <p>
+        <strong>YierPet Win</strong> 是一只住在 Windows 桌面上的透明悬浮小宠物。
+        它会自己散步、跳跃、挥手；可以拖拽和「甩出去」玩物理抛掷；
+        还会在合适的时候用头顶气泡提醒你喝水、起身、别熬夜，并在 CPU 飙高时「红温」。
+      </p>
+      <p>
+        本仓库<strong>自带</strong>精灵图与表情包（<code>Assets/</code>），与 macOS 版能力对齐，但<strong>独立发布</strong>，不依赖 Mac 项目。
+        运行<strong>不需要</strong>辅助功能、屏幕录制等敏感权限。
+      </p>
+    </section>
+
+    <section id="requirements">
+      <h2>2. 开始之前</h2>
+      <ul>
+        <li><strong>操作系统</strong>：Windows 10（1809 及以上）或 Windows 11。</li>
+        <li><strong>编译</strong>：需要 <a href="https://dotnet.microsoft.com/download/dotnet/8.0" target="_blank" rel="noopener">.NET 8 SDK</a>。</li>
+        <li><strong>运行已编译的 exe</strong>：需要 <a href="https://dotnet.microsoft.com/download/dotnet/8.0" target="_blank" rel="noopener">.NET 8 桌面运行时</a>（Desktop Runtime）。</li>
+        <li><strong>可选</strong>：Git（用于 <code>git clone</code>；ZIP 解压亦可）。</li>
+      </ul>
+      <div class="note">
+        构建时 NuGet 会下载 <strong>ImageSharp</strong> 用于解码 WebP 图集，需联网。素材已在仓库内，不会从别处拉取图片。
+      </div>
+    </section>
+
+    <section id="install">
+      <h2>3. 安装与首次启动（详细）</h2>
+      <h3>3.1 进入项目目录</h3>
+      <p>确保目录下能看到 <code>build.ps1</code>、<code>Assets\spritesheet.webp</code>、<code>Assets\Packs\</code> 和 <code>YierPet\</code> 源码文件夹。</p>
+      <h3>3.2 执行构建脚本</h3>
+      <pre><code>.\build.ps1</code></pre>
+      <p>脚本会检查本地素材是否存在，然后执行 <code>dotnet publish</code>，输出到 <code>build\</code>。</p>
+      <h3>3.3 启动</h3>
+      <pre><code>.\build\YierPet.exe</code></pre>
+      <p>也可在资源管理器中双击 <code>build\YierPet.exe</code>。首次启动若缺少桌面运行时，按提示安装即可。</p>
+      <h3>各文件夹说明</h3>
+      <table>
+        <thead>
+          <tr><th>路径</th><th>作用</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>Assets\</code></td><td>精灵图集与三套表情包（构建时复制到 <code>build\Assets\</code>）</td></tr>
+          <tr><td><code>YierPet\</code></td><td>C# / WPF 源代码</td></tr>
+          <tr><td><code>build\</code></td><td>构建产物，含 <code>YierPet.exe</code></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="runtime-only">
+      <h2>4. 只运行、不编译？</h2>
+      <p>若别人只想要可执行文件，你可以在本机构建后，将整个 <code>build\</code> 文件夹打包发给对方（需包含 <code>YierPet.exe</code> 与同目录下的 <code>Assets\</code> 等文件）。</p>
+      <p>对方电脑需安装 <strong>.NET 8 桌面运行时</strong>，无需安装 SDK。</p>
+      <div class="note">
+        若希望「单文件、免装运行时」，可在 <code>YierPet</code> 目录自行调整 <code>dotnet publish</code> 为自包含发布（体积会更大）。默认 <code>build.ps1</code> 为框架依赖发布，体积更小。
+      </div>
+    </section>
+
+    <section id="smartscreen">
+      <h2>5. SmartScreen / 杀毒软件拦截</h2>
+      <p>未签名的 exe 可能被 Windows Defender SmartScreen 提示「未知发布者」。</p>
+      <p><strong>常见处理</strong>：</p>
+      <ol>
+        <li>在警告窗口点「更多信息」→「仍要运行」；或</li>
+        <li>右键 <code>YierPet.exe</code> → 属性 → 若底部有「解除锁定」，勾选后确定，再双击运行。</li>
+      </ol>
+      <p>在本仓库自行 <code>.\build.ps1</code> 构建的版本，与下载他人打包的版本都可能出现提示，属正常现象。</p>
+    </section>
+
+    <section id="startup">
+      <h2>6. 开机自启（可选）</h2>
+      <ol>
+        <li>在资源管理器中打开 <code>build\YierPet.exe</code>，<strong>右键 → 创建快捷方式</strong>；</li>
+        <li>按 <kbd>Win</kbd> + <kbd>R</kbd>，输入 <code>shell:startup</code> 回车，打开「启动」文件夹；</li>
+        <li>把快捷方式拖进该文件夹；</li>
+        <li>建议把 <code>build</code> 文件夹放在固定路径（如 <code>D:\Apps\YierPetWin\build</code>），避免移动后快捷方式失效。</li>
+      </ol>
+      <p>下次登录 Windows 后，一二会自动出现在桌面。</p>
+    </section>
+
+    <section id="basics">
+      <h2>7. 基本操作</h2>
+      <table>
+        <thead>
+          <tr><th>操作</th><th>效果</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>按住左键并拖动</td><td>带着宠物移动；经典版拖动时会播放跑步动画</td></tr>
+          <tr><td>快速甩动后松手</td><td>抛掷：飞行、撞边与落地反弹；摔得狠会生气</td></tr>
+          <tr><td>单击</td><td>打招呼（经典版挥手；表情包版为开心/比心）</td></tr>
+          <tr><td>右键点击宠物</td><td>打开设置菜单</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="menu">
+      <h2>8. 右键菜单</h2>
+      <ul>
+        <li><strong>形象</strong> — 经典一二 / 活力一二 / 活力布布 / 一二布布（自动保存）；</li>
+        <li><strong>动作</strong> — 仅「经典一二」，手动切换 9 种图集动作；</li>
+        <li><strong>暂停随机行为 / 开启随机行为</strong>；</li>
+        <li><strong>提醒设置</strong> — 久坐、喝水、深夜、摸鱼；</li>
+        <li><strong>系统哨兵</strong> — CPU、内存、电量、磁盘；</li>
+        <li><strong>陪伴模式</strong> — 早晨、午饭、下午茶、周五、编码久战；</li>
+        <li><strong>退出</strong> — 关闭应用。</li>
+      </ul>
+      <div class="note">
+        <strong>隐藏功能</strong>：按住 <kbd>Alt</kbd> 再右键，会出现「测试提醒」，可立即触发各类提醒，方便录视频或自查效果。
+      </div>
+    </section>
+
+    <section id="reminders">
+      <h2>9. 健康提醒与系统哨兵（概要）</h2>
+      <h3>健康提醒</h3>
+      <table>
+        <thead>
+          <tr><th>类型</th><th>大致触发条件</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>久坐提醒</td><td>连续在电脑前活跃约 1 小时（离开 5 分钟会清零）</td></tr>
+          <tr><td>喝水提醒</td><td>约每 30 分钟（人不在时不计时）</td></tr>
+          <tr><td>深夜关怀</td><td>23 点后待机动画变慢；若仍在工作，约每 30 分钟关怀一次</td></tr>
+          <tr><td>摸鱼检测</td><td>视频类程序连续前台约 30 分钟（如 B 站客户端、PotPlayer、腾讯视频等，按进程名识别）</td></tr>
+        </tbody>
+      </table>
+      <h3>系统哨兵</h3>
+      <p>CPU 持续偏高、内存负载过高、低电量、磁盘空间不足等会冒气泡。CPU 红温时经典版会逐渐变红；「活力一二」表情包有着火动画。</p>
+      <p>任意两类提醒之间约 <strong>90 秒</strong> 间隔。设置保存在 <code>%AppData%\YierPetWin\settings.json</code>。</p>
+    </section>
+
+    <section id="companion">
+      <h2>10. 陪伴模式</h2>
+      <table>
+        <thead>
+          <tr><th>项目</th><th>触发说明</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>早晨问候</td><td>6–10 点且在电脑前，每天一次</td></tr>
+          <tr><td>午饭提醒</td><td>12 点且在电脑前，每天一次</td></tr>
+          <tr><td>下午咖啡</td><td>15 点且在电脑前，每天一次</td></tr>
+          <tr><td>周五撒欢</td><td>周五 17–19 点且在电脑前，每周一次</td></tr>
+          <tr><td>编码久战</td><td>在 VS Code / Visual Studio / JetBrains 等 IDE 或终端中连续约 2 小时</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="styles">
+      <h2>11. 四种形象</h2>
+      <table>
+        <thead>
+          <tr><th>菜单名称</th><th>说明</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>经典一二</td><td>精灵图集 <code>Assets\spritesheet.webp</code>，9 种动作可手动切换</td></tr>
+          <tr><td>活力一二</td><td><code>Assets\Packs\yier</code> 帧动画，含红温着火</td></tr>
+          <tr><td>活力布布</td><td><code>Assets\Packs\bubu</code></td></tr>
+          <tr><td>一二布布</td><td><code>Assets\Packs\duo</code> 合体表情包</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="faq">
+      <h2>12. 常见问题</h2>
+      <h3>任务栏里找不到 YierPet？</h3>
+      <p>设计为不占用任务栏主按钮。请右键宠物 →「退出」。</p>
+      <h3><code>.\build.ps1</code> 报缺少 Assets？</h3>
+      <p>确认克隆的是完整仓库，根目录应有 <code>Assets\spritesheet.webp</code> 和 <code>Assets\Packs\</code>。</p>
+      <h3>双击 exe 没反应？</h3>
+      <p>先安装 .NET 8 桌面运行时；或在终端运行 <code>.\build\YierPet.exe</code> 查看错误信息。</p>
+      <h3>需要管理员或特殊权限吗？</h3>
+      <p>不需要。空闲时间与前台程序检测使用 Windows 公开 API。</p>
+      <h3>摸鱼检测认不出我的播放器？</h3>
+      <p>在源码 <code>YierPet\ActivityMonitor.cs</code> 的 <code>SlackProcessNames</code> 中加入该程序的<strong>进程名</strong>（任务管理器 → 详细信息 → 名称，不含 <code>.exe</code>）。</p>
+      <h3>想改台词或提醒间隔？</h3>
+      <p>编辑 <code>YierPet\ReminderCenter.cs</code> 后重新 <code>.\build.ps1</code>。手感参数在 <code>PetController.cs</code> 顶部。</p>
+      <h3>如何打开本教程？</h3>
+      <p>双击 <code>docs\tutorial\index.html</code>，或用浏览器打开该文件即可（可离线观看、适合录安装视频时对照）。</p>
+    </section>
+
+    <section id="quit">
+      <h2>13. 如何退出</h2>
+      <p>右键点击桌面上的宠物 → 选择<strong>退出</strong>。</p>
+    </section>
+
+    <footer>
+      <p>YierPet Win · MIT License · <a href="https://github.com/xiaojieshi-bot/YierPet4Win">GitHub</a></p>
+    </footer>
+  </div>
+</body>
+</html>
