@@ -45,7 +45,7 @@ YierPetWin/
 ## 安装运行
 
 ```powershell
-git clone https://github.com/xiaojieshi-bot/YierPet4Win.git
+git clone https://gh-proxy.com/https://github.com/xiaojieshi-bot/YierPet4Win.git
 cd YierPet4Win
 .\build.ps1
 .\build\YierPet.exe
