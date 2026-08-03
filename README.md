@@ -97,3 +97,47 @@ YierPetWin/YierPet/
 ## 许可证
 
 [MIT](LICENSE)
+
+## 发布 Release（维护者）
+
+Windows 项目必须在 **Windows** 上构建（Mac 无法编译 WPF）。推荐两种方式：
+
+### 方式 A：打 Git 标签，自动发布（推荐）
+
+在任意机器上给仓库打版本标签并推送，GitHub Actions 会在 Windows 虚拟机里构建，并把 zip 挂到 Release：
+
+```bash
+cd YierPetWin
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+几分钟后打开 [Releases](https://github.com/xiaojieshi-bot/YierPet4Win/releases) 即可看到 **YierPet4Win-win-x64.zip**（自包含版，用户解压即用）。
+
+更新版本时改标签号，例如 `v1.0.1`，再 push 一次 tag。
+
+### 方式 B：本机手动打包上传
+
+在 Windows 电脑上：
+
+```powershell
+git clone https://gh-proxy.com/https://github.com/xiaojieshi-bot/YierPet4Win.git
+cd YierPet4Win
+.\build.ps1 -Package -SelfContained
+```
+
+产物在 `dist\YierPet4Win-win-x64.zip`。然后：
+
+1. 打开 GitHub 仓库 → **Releases** → **Draft a new release**
+2. 新建标签（如 `v1.0.0`），填写说明
+3. 把 `dist\YierPet4Win-win-x64.zip` 拖进附件区 → **Publish release**
+
+或用 GitHub CLI：
+
+```powershell
+gh release create v1.0.0 dist\YierPet4Win-win-x64.zip --title "v1.0.0" --notes "首个 Windows 发布包"
+```
+
+### 给用户的使用说明
+
+下载 Release 里的 zip → 解压到任意文件夹 → 双击 `YierPet.exe`。自包含包**不需要**再装 .NET 运行时。

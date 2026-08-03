@@ -2,10 +2,13 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 
 namespace YierPet;
 
+/// <summary>
+/// Speech bubble in an owned window so it always stacks above the pet
+/// (macOS uses NSWindow.addChildWindow for the same reason).
+/// </summary>
 public sealed class SpeechBubble
 {
     private readonly Window _window;
@@ -16,6 +19,7 @@ public sealed class SpeechBubble
 
     private const double MaxTextWidth = 220;
     private const double Padding = 10;
+    /// <summary>Overlap into the pet cell so the tail sits near the head.</summary>
     private const double OverlapIntoPet = 88;
 
     public SpeechBubble(Window parent)
@@ -25,6 +29,7 @@ public sealed class SpeechBubble
         {
             FontSize = 12,
             FontWeight = FontWeights.Medium,
+            FontFamily = new FontFamily("Microsoft YaHei UI, PingFang SC, Segoe UI"),
             Foreground = new SolidColorBrush(Color.FromRgb(0x26, 0x26, 0x26)),
             TextAlignment = TextAlignment.Center,
             TextWrapping = TextWrapping.Wrap,
@@ -36,18 +41,17 @@ public sealed class SpeechBubble
 
         _window = new Window
         {
+            Owner = parent,
             WindowStyle = WindowStyle.None,
             AllowsTransparency = true,
             Background = Brushes.Transparent,
             ShowInTaskbar = false,
-            Topmost = true,
+            ShowActivated = false,
             IsHitTestVisible = false,
             Opacity = 0,
-            SizeToContent = SizeToContent.WidthAndHeight,
             Content = _bubble,
         };
         _window.Show();
-        SyncPosition();
         _parent.LocationChanged += (_, _) => SyncPosition();
     }
 
@@ -56,20 +60,32 @@ public sealed class SpeechBubble
         _label.Text = text;
         _label.Measure(new Size(MaxTextWidth, double.PositiveInfinity));
         var textSize = _label.DesiredSize;
-        var w = textSize.Width + Padding * 2;
+        var w = Math.Max(textSize.Width + Padding * 2, 40);
         var h = textSize.Height + Padding * 2 + BubbleCanvas.TailHeight;
 
         _bubble.Width = w;
         _bubble.Height = h;
+        _bubble.Measure(new Size(w, h));
+        _bubble.Arrange(new Rect(0, 0, w, h));
+        _bubble.InvalidateVisual();
+
         Canvas.SetLeft(_label, Padding);
         Canvas.SetTop(_label, BubbleCanvas.TailHeight + Padding);
         _label.Width = textSize.Width;
 
+        _window.Width = w;
+        _window.Height = h;
         SyncPosition(w, h);
 
         _hideTimer?.Stop();
-        var fadeIn = new DoubleAnimation(1, TimeSpan.FromMilliseconds(200));
+        _window.BeginAnimation(UIElement.OpacityProperty, null);
+        _window.Opacity = 0;
+        var fadeIn = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(200))
+        {
+            FillBehavior = FillBehavior.HoldEnd,
+        };
         _window.BeginAnimation(UIElement.OpacityProperty, fadeIn);
+        _window.Topmost = true;
 
         _hideTimer = new System.Windows.Threading.DispatcherTimer
         {
@@ -86,18 +102,23 @@ public sealed class SpeechBubble
     private void Hide()
     {
         _hideTimer?.Stop();
-        var fade = new DoubleAnimation(0, TimeSpan.FromMilliseconds(300));
+        _window.BeginAnimation(UIElement.OpacityProperty, null);
+        var fade = new DoubleAnimation(_window.Opacity, 0, TimeSpan.FromMilliseconds(300))
+        {
+            FillBehavior = FillBehavior.HoldEnd,
+        };
         _window.BeginAnimation(UIElement.OpacityProperty, fade);
     }
 
     private void SyncPosition(double? width = null, double? height = null)
     {
-        var pf = _parent;
-        var w = width ?? _bubble.Width;
-        var h = height ?? _bubble.Height;
+        var w = width ?? _window.Width;
+        var h = height ?? _window.Height;
         if (w <= 0 || h <= 0) return;
-        _window.Left = pf.Left + (pf.Width - w) / 2;
-        _window.Top = pf.Top - h + OverlapIntoPet;
+
+        // Match macOS: bubble bottom overlaps pet top by OverlapIntoPet (WPF Y-down).
+        _window.Left = _parent.Left + (_parent.Width - w) / 2;
+        _window.Top = _parent.Top + OverlapIntoPet - h;
     }
 }
 
@@ -107,7 +128,8 @@ internal sealed class BubbleCanvas : Canvas
 
     protected override void OnRender(DrawingContext dc)
     {
-        base.OnRender(dc);
+        if (ActualWidth < 4 || ActualHeight < 4) return;
+
         var r = 10.0;
         var tailW = 14.0;
         var minX = 1.0;
