@@ -4,6 +4,35 @@
 
 纯 **C# + WPF** 原生实现，构建时仅拉取 NuGet（WebP 解码），运行不需额外权限。
 
+仓库：[gitee.com/cat_10/YierPet4Win](https://gitee.com/cat_10/YierPet4Win) · 图文教程：[docs/tutorial/index.html](docs/tutorial/index.html)
+
+## 安装（Gitee · 两种方式）
+
+### 方法一：Release 压缩包（推荐）
+
+不用 Git，不用编译，**解压后双击即可**。
+
+1. 打开 [Gitee Releases](https://gitee.com/cat_10/YierPet4Win/releases)
+2. 下载 **YierPet4Win-win-x64.zip**（自包含版，无需另装 .NET）
+3. 解压到任意文件夹，双击 **YierPet.exe**
+
+若 Windows 拦截：点「更多信息」→「仍要运行」；或右键 exe → 属性 → 勾选「解除锁定」。
+
+### 方法二：克隆源码自己编译
+
+适合开发者或 Release 尚未更新时。需要先安装 **.NET 8 SDK**（不是仅 Runtime）：
+
+https://dotnet.microsoft.com/download/dotnet/8.0
+
+```powershell
+git clone https://gitee.com/cat_10/YierPet4Win.git
+cd YierPet4Win
+powershell -ExecutionPolicy Bypass -File .\build.ps1
+.\build\YierPet.exe
+```
+
+> **开机自启**：为 `YierPet.exe` 创建快捷方式，放入「启动」文件夹（`Win+R` → `shell:startup`）。
+
 ## 功能特性
 
 | 能力 | 说明 |
@@ -33,27 +62,6 @@ YierPetWin/
 ```
 
 换形象：替换 `Assets/spritesheet.webp` 或 `Assets/Packs` 下对应包；图集契约为 8 列 × 9 行（每格 192×208），与 mac 版一致。
-
-## 环境要求
-
-- Windows 10 1809+ 或 Windows 11  
-- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)（构建）  
-- 运行需 [.NET 8 桌面运行时](https://dotnet.microsoft.com/download/dotnet/8.0)
-
-📖 **图文安装教程**（可发给别人或录视频对照）：[`docs/tutorial/index.html`](docs/tutorial/index.html)（双击用浏览器打开即可）。
-
-## 安装运行
-
-```powershell
-git clone https://gh-proxy.com/https://github.com/xiaojieshi-bot/YierPet4Win.git
-cd YierPet4Win
-.\build.ps1
-.\build\YierPet.exe
-```
-
-仓库：[github.com/xiaojieshi-bot/YierPet4Win](https://github.com/xiaojieshi-bot/YierPet4Win)
-
-> **开机自启**：为 `build\YierPet.exe` 创建快捷方式，放入「启动」文件夹（`Win+R` → `shell:startup`）。
 
 ## 使用说明
 
