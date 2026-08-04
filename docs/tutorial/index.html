@@ -226,45 +226,59 @@
       <h1>YierPet Win 一二桌宠</h1>
       <p class="tagline">Windows 桌面上的「一二」——安装、运行与日常使用说明</p>
       <div class="meta">
-        <span>仓库：<a href="https://github.com/xiaojieshi-bot/YierPet4Win" target="_blank" rel="noopener">github.com/xiaojieshi-bot/YierPet4Win</a></span>
+        <span>仓库：<a href="https://gitee.com/cat_10/YierPet4Win" target="_blank" rel="noopener">gitee.com/cat_10/YierPet4Win</a></span>
         <span>平台：Windows 10 / 11</span>
-        <span>运行：.NET 8 桌面运行时</span>
-        <span>素材：仓库内 <code>Assets/</code> 自带，无需另下资源包</span>
+        <span>推荐：Release 压缩包，解压即用</span>
       </div>
     </header>
 
     <section id="quickstart" class="quickstart">
-      <h2>0. 太长不看 · 直接怎么做</h2>
-      <p style="margin-top:0">在 Windows 上打开 <strong>PowerShell</strong>（或终端），按顺序做下面四步即可。</p>
+      <h2>0. 太长不看 · 两种安装方式</h2>
+
+      <h3 style="margin-top:0">方法一：下载 Release 压缩包（推荐）</h3>
+      <p>不用装 Git，不用编译，<strong>解压后双击即可</strong>。</p>
       <ol class="quickstart-steps">
         <li>
-          <div class="step-title">（首次）安装 .NET 8 SDK</div>
-          <p style="margin:0 0 0.5rem">用于编译项目。若已安装可跳过。</p>
-          <p style="margin:0">打开微软官网下载页，安装 <strong>.NET 8 SDK</strong>（不是仅 Runtime）：</p>
-          <p style="margin:0.35rem 0 0"><a href="https://dotnet.microsoft.com/download/dotnet/8.0" target="_blank" rel="noopener">dotnet.microsoft.com/download/dotnet/8.0</a></p>
-          <p style="margin:0.5rem 0 0">装完后新开一个终端，执行 <code>dotnet --version</code>，应显示 8.x。</p>
+          <div class="step-title">打开 Release 页面</div>
+          <p style="margin:0"><a href="https://gitee.com/cat_10/YierPet4Win/releases" target="_blank" rel="noopener">gitee.com/cat_10/YierPet4Win/releases</a></p>
         </li>
         <li>
-          <div class="step-title">下载项目</div>
-          <p style="margin:0 0 0.5rem">整段复制粘贴到终端回车。</p>
-          <pre><code>git clone https://gh-proxy.com/https://github.com/xiaojieshi-bot/YierPet4Win.git
+          <div class="step-title">下载安装包</div>
+          <p style="margin:0">下载最新版 <code>YierPet4Win-win-x64.zip</code>（自包含版，无需另装 .NET）。</p>
+        </li>
+        <li>
+          <div class="step-title">解压并运行</div>
+          <p style="margin:0">解压到任意文件夹（如桌面），双击 <code>YierPet.exe</code>。桌面上会出现「一二」。</p>
+        </li>
+      </ol>
+      <div class="note" style="margin-top:0.75rem">
+        若 Windows 提示「未知发布者」：点「更多信息」→「仍要运行」；或右键 exe → 属性 → 勾选「解除锁定」。
+      </div>
+
+      <h3 style="margin-top:1.75rem">方法二：Gitee 克隆源码自己编译</h3>
+      <p>适合开发者或 Release 尚未更新时。需要先安装 <strong>.NET 8 SDK</strong>（不是仅 Runtime）：</p>
+      <p style="margin:0.35rem 0 0"><a href="https://dotnet.microsoft.com/download/dotnet/8.0" target="_blank" rel="noopener">https://dotnet.microsoft.com/download/dotnet/8.0</a></p>
+      <p style="margin:0.5rem 0 0">装完后新开终端，执行 <code>dotnet --version</code>，应显示 8.x。</p>
+      <ol class="quickstart-steps">
+        <li>
+          <div class="step-title">克隆仓库</div>
+          <pre><code>git clone https://gitee.com/cat_10/YierPet4Win.git
 cd YierPet4Win</code></pre>
-          <p style="margin:0.5rem 0 0">没有 Git 也可以：下载 ZIP 解压，在资源管理器地址栏输入 <code>powershell</code> 回车，当前目录即项目根。</p>
         </li>
         <li>
           <div class="step-title">构建</div>
-          <p style="margin:0 0 0.5rem">若提示「无法加载，因为在此系统上禁止运行脚本」，先执行一次（仅当前用户）：</p>
+          <p style="margin:0 0 0.5rem">若提示禁止运行脚本，先执行一次：</p>
           <pre><code>Set-ExecutionPolicy -Scope CurrentUser RemoteSigned</code></pre>
           <p style="margin:0 0 0.5rem">然后构建：</p>
-          <pre><code>.\build.ps1</code></pre>
-          <p style="margin:0">成功后会生成 <code>build\YierPet.exe</code>。</p>
+          <pre><code>powershell -ExecutionPolicy Bypass -File .\build.ps1</code></pre>
         </li>
         <li>
-          <div class="step-title">启动桌宠</div>
+          <div class="step-title">启动</div>
           <pre><code>.\build\YierPet.exe</code></pre>
-          <p style="margin:0.5rem 0 0">桌面上会出现「一二」。<strong>任务栏通常不会出现常驻按钮，这是正常的。</strong></p>
+          <p style="margin:0.5rem 0 0"><strong>任务栏通常不会出现常驻按钮，这是正常的。</strong></p>
         </li>
       </ol>
+
       <div class="quickstart-after">
         <strong>日常只需记：</strong>
         <dl>
@@ -278,11 +292,10 @@ cd YierPet4Win</code></pre>
     <nav class="toc" aria-label="目录">
       <h2>目录</h2>
       <ol>
-        <li><a href="#quickstart">太长不看 · 四步上手</a></li>
+        <li><a href="#quickstart">太长不看 · 两种安装方式</a></li>
+        <li><a href="#release">方法一：Release 压缩包</a></li>
+        <li><a href="#source">方法二：克隆源码编译</a></li>
         <li><a href="#intro">这是什么</a></li>
-        <li><a href="#requirements">开始之前</a></li>
-        <li><a href="#install">安装与首次启动</a></li>
-        <li><a href="#runtime-only">只运行、不编译？</a></li>
         <li><a href="#smartscreen">SmartScreen / 杀毒拦截</a></li>
         <li><a href="#startup">开机自启</a></li>
         <li><a href="#basics">基本操作</a></li>
@@ -295,8 +308,48 @@ cd YierPet4Win</code></pre>
       </ol>
     </nav>
 
+    <section id="release">
+      <h2>1. 方法一：Release 压缩包（详细）</h2>
+      <ol>
+        <li>打开 <a href="https://gitee.com/cat_10/YierPet4Win/releases" target="_blank" rel="noopener">Gitee Releases</a>；</li>
+        <li>下载 <code>YierPet4Win-win-x64.zip</code>；</li>
+        <li>右键 zip → <strong>解压到当前文件夹</strong>（或「全部解压缩」）；</li>
+        <li>进入解压后的文件夹，双击 <code>YierPet.exe</code>。</li>
+      </ol>
+      <div class="note">
+        Release 包为<strong>自包含版</strong>，已内置 .NET 运行时，<strong>不需要</strong>安装 SDK 或 Runtime，也不需要 Git。
+      </div>
+      <p>建议把整个文件夹放在固定位置（如 <code>D:\Apps\YierPet4Win</code>），不要只复制 exe 而漏掉同目录下的 <code>Assets</code> 等文件。</p>
+    </section>
+
+    <section id="source">
+      <h2>2. 方法二：克隆源码编译（详细）</h2>
+      <h3>开始之前</h3>
+      <ul>
+        <li><strong>操作系统</strong>：Windows 10（1809 及以上）或 Windows 11。</li>
+        <li><strong>编译</strong>：需要 <a href="https://dotnet.microsoft.com/download/dotnet/8.0" target="_blank" rel="noopener">.NET 8 SDK</a>。</li>
+        <li><strong>Git</strong>：用于 <code>git clone</code>。</li>
+      </ul>
+      <h3>步骤</h3>
+      <pre><code>git clone https://gitee.com/cat_10/YierPet4Win.git
+cd YierPet4Win
+powershell -ExecutionPolicy Bypass -File .\build.ps1
+.\build\YierPet.exe</code></pre>
+      <p>也可在资源管理器中双击 <code>build\YierPet.exe</code> 启动。框架依赖版需另装 .NET 8 桌面运行时；打 Release 包请用 <code>.\build.ps1 -Package -SelfContained</code>。</p>
+      <table>
+        <thead>
+          <tr><th>路径</th><th>作用</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>Assets\</code></td><td>精灵图集与表情包</td></tr>
+          <tr><td><code>YierPet\</code></td><td>源代码</td></tr>
+          <tr><td><code>build\</code></td><td>构建产物</td></tr>
+        </tbody>
+      </table>
+    </section>
+
     <section id="intro">
-      <h2>1. 这是什么</h2>
+      <h2>3. 这是什么</h2>
       <p>
         <strong>YierPet Win</strong> 是一只住在 Windows 桌面上的透明悬浮小宠物。
         它会自己散步、跳跃、挥手；可以拖拽和「甩出去」玩物理抛掷；
@@ -308,75 +361,30 @@ cd YierPet4Win</code></pre>
       </p>
     </section>
 
-    <section id="requirements">
-      <h2>2. 开始之前</h2>
-      <ul>
-        <li><strong>操作系统</strong>：Windows 10（1809 及以上）或 Windows 11。</li>
-        <li><strong>编译</strong>：需要 <a href="https://dotnet.microsoft.com/download/dotnet/8.0" target="_blank" rel="noopener">.NET 8 SDK</a>。</li>
-        <li><strong>运行已编译的 exe</strong>：需要 <a href="https://dotnet.microsoft.com/download/dotnet/8.0" target="_blank" rel="noopener">.NET 8 桌面运行时</a>（Desktop Runtime）。</li>
-        <li><strong>可选</strong>：Git（用于 <code>git clone</code>；ZIP 解压亦可）。</li>
-      </ul>
-      <div class="note">
-        构建时 NuGet 会下载 <strong>ImageSharp</strong> 用于解码 WebP 图集，需联网。素材已在仓库内，不会从别处拉取图片。
-      </div>
-    </section>
-
-    <section id="install">
-      <h2>3. 安装与首次启动（详细）</h2>
-      <h3>3.1 进入项目目录</h3>
-      <p>确保目录下能看到 <code>build.ps1</code>、<code>Assets\spritesheet.webp</code>、<code>Assets\Packs\</code> 和 <code>YierPet\</code> 源码文件夹。</p>
-      <h3>3.2 执行构建脚本</h3>
-      <pre><code>.\build.ps1</code></pre>
-      <p>脚本会检查本地素材是否存在，然后执行 <code>dotnet publish</code>，输出到 <code>build\</code>。</p>
-      <h3>3.3 启动</h3>
-      <pre><code>.\build\YierPet.exe</code></pre>
-      <p>也可在资源管理器中双击 <code>build\YierPet.exe</code>。首次启动若缺少桌面运行时，按提示安装即可。</p>
-      <h3>各文件夹说明</h3>
-      <table>
-        <thead>
-          <tr><th>路径</th><th>作用</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><code>Assets\</code></td><td>精灵图集与三套表情包（构建时复制到 <code>build\Assets\</code>）</td></tr>
-          <tr><td><code>YierPet\</code></td><td>C# / WPF 源代码</td></tr>
-          <tr><td><code>build\</code></td><td>构建产物，含 <code>YierPet.exe</code></td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <section id="runtime-only">
-      <h2>4. 只运行、不编译？</h2>
-      <p>若别人只想要可执行文件，你可以在本机构建后，将整个 <code>build\</code> 文件夹打包发给对方（需包含 <code>YierPet.exe</code> 与同目录下的 <code>Assets\</code> 等文件）。</p>
-      <p>对方电脑需安装 <strong>.NET 8 桌面运行时</strong>，无需安装 SDK。</p>
-      <div class="note">
-        若希望「单文件、免装运行时」，可在 <code>YierPet</code> 目录自行调整 <code>dotnet publish</code> 为自包含发布（体积会更大）。默认 <code>build.ps1</code> 为框架依赖发布，体积更小。
-      </div>
-    </section>
-
     <section id="smartscreen">
-      <h2>5. SmartScreen / 杀毒软件拦截</h2>
+      <h2>4. SmartScreen / 杀毒软件拦截</h2>
       <p>未签名的 exe 可能被 Windows Defender SmartScreen 提示「未知发布者」。</p>
       <p><strong>常见处理</strong>：</p>
       <ol>
         <li>在警告窗口点「更多信息」→「仍要运行」；或</li>
         <li>右键 <code>YierPet.exe</code> → 属性 → 若底部有「解除锁定」，勾选后确定，再双击运行。</li>
       </ol>
-      <p>在本仓库自行 <code>.\build.ps1</code> 构建的版本，与下载他人打包的版本都可能出现提示，属正常现象。</p>
+      <p>Release 下载版与自行编译版都可能出现此提示，属正常现象。</p>
     </section>
 
     <section id="startup">
-      <h2>6. 开机自启（可选）</h2>
+      <h2>5. 开机自启（可选）</h2>
       <ol>
-        <li>在资源管理器中打开 <code>build\YierPet.exe</code>，<strong>右键 → 创建快捷方式</strong>；</li>
+        <li>对 <code>YierPet.exe</code> <strong>右键 → 创建快捷方式</strong>；</li>
         <li>按 <kbd>Win</kbd> + <kbd>R</kbd>，输入 <code>shell:startup</code> 回车，打开「启动」文件夹；</li>
         <li>把快捷方式拖进该文件夹；</li>
-        <li>建议把 <code>build</code> 文件夹放在固定路径（如 <code>D:\Apps\YierPetWin\build</code>），避免移动后快捷方式失效。</li>
+        <li>建议把桌宠文件夹放在固定路径（如 <code>D:\Apps\YierPet4Win</code>），避免移动后快捷方式失效。</li>
       </ol>
       <p>下次登录 Windows 后，一二会自动出现在桌面。</p>
     </section>
 
     <section id="basics">
-      <h2>7. 基本操作</h2>
+      <h2>6. 基本操作</h2>
       <table>
         <thead>
           <tr><th>操作</th><th>效果</th></tr>
@@ -391,7 +399,7 @@ cd YierPet4Win</code></pre>
     </section>
 
     <section id="menu">
-      <h2>8. 右键菜单</h2>
+      <h2>7. 右键菜单</h2>
       <ul>
         <li><strong>形象</strong> — 经典一二 / 活力一二 / 活力布布 / 一二布布（自动保存）；</li>
         <li><strong>动作</strong> — 仅「经典一二」，手动切换 9 种图集动作；</li>
@@ -407,7 +415,7 @@ cd YierPet4Win</code></pre>
     </section>
 
     <section id="reminders">
-      <h2>9. 健康提醒与系统哨兵（概要）</h2>
+      <h2>8. 健康提醒与系统哨兵（概要）</h2>
       <h3>健康提醒</h3>
       <table>
         <thead>
@@ -426,7 +434,7 @@ cd YierPet4Win</code></pre>
     </section>
 
     <section id="companion">
-      <h2>10. 陪伴模式</h2>
+      <h2>9. 陪伴模式</h2>
       <table>
         <thead>
           <tr><th>项目</th><th>触发说明</th></tr>
@@ -442,7 +450,7 @@ cd YierPet4Win</code></pre>
     </section>
 
     <section id="styles">
-      <h2>11. 四种形象</h2>
+      <h2>10. 四种形象</h2>
       <table>
         <thead>
           <tr><th>菜单名称</th><th>说明</th></tr>
@@ -457,7 +465,9 @@ cd YierPet4Win</code></pre>
     </section>
 
     <section id="faq">
-      <h2>12. 常见问题</h2>
+      <h2>11. 常见问题</h2>
+      <h3>Release 和源码编译有什么区别？</h3>
+      <p>Release 压缩包解压即用；源码编译需要 .NET 8 SDK 和 Git，适合开发者。</p>
       <h3>任务栏里找不到 YierPet？</h3>
       <p>设计为不占用任务栏主按钮。请右键宠物 →「退出」。</p>
       <h3><code>.\build.ps1</code> 报缺少 Assets？</h3>
@@ -475,12 +485,12 @@ cd YierPet4Win</code></pre>
     </section>
 
     <section id="quit">
-      <h2>13. 如何退出</h2>
+      <h2>12. 如何退出</h2>
       <p>右键点击桌面上的宠物 → 选择<strong>退出</strong>。</p>
     </section>
 
     <footer>
-      <p>YierPet Win · MIT License · <a href="https://github.com/xiaojieshi-bot/YierPet4Win">GitHub</a></p>
+      <p>YierPet Win · MIT License · <a href="https://gitee.com/cat_10/YierPet4Win">Gitee</a></p>
     </footer>
   </div>
 </body>
